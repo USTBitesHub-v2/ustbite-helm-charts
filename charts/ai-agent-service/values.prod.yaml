@@ -1,0 +1,49 @@
+replicaCount: 2
+image:
+  repository: ACCOUNT_ID.dkr.ecr.REGION.amazonaws.com/ustbite/ai-agent-service
+  pullPolicy: IfNotPresent
+  tag: ai-agent-service-v0.4.0
+service:
+  type: ClusterIP
+  port: 8009
+namespace: ustbite-backend
+env:
+  SERVICE_NAME: ustbite-ai-agent-service
+  SERVICE_PORT: "8009"
+  LOG_LEVEL: "INFO"
+  AWS_REGION: "us-east-1"
+  BEDROCK_MODEL_ID: "amazon.nova-lite-v1:0"
+  CART_SERVICE_URL: "http://ustbite-cart-service-prod:8010"
+  ORDER_SERVICE_URL: "http://ustbite-order-service-prod:8003"
+  RESTAURANT_SERVICE_URL: "http://ustbite-restaurant-service-prod:8002"
+resources:
+  requests:
+    cpu: 200m
+    memory: 256Mi
+  limits:
+    cpu: 500m
+    memory: 512Mi
+autoscaling:
+  enabled: true
+  minReplicas: 2
+  maxReplicas: 5
+  targetCPUUtilizationPercentage: 70
+podDisruptionBudget:
+  enabled: true
+  minAvailable: 1
+serviceAccount:
+  create: true
+  name: ""
+  irsaRoleArn: "arn:aws:iam::ACCOUNT_ID:role/ustbite-prod-ai-agent-bedrock"
+livenessProbe:
+  httpGet:
+    path: /health
+    port: http
+  initialDelaySeconds: 30
+  periodSeconds: 60
+readinessProbe:
+  httpGet:
+    path: /health
+    port: http
+  initialDelaySeconds: 10
+  periodSeconds: 30

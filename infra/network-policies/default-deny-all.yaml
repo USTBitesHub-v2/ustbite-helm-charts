@@ -1,0 +1,36 @@
+# Default-deny-all applied ONLY to app namespaces.
+# Infrastructure namespaces (ingress-nginx, argocd, monitoring) are intentionally
+# left open — applying default-deny to them causes cascading allow-rule hell
+# for internal plumbing (xDS gRPC, Dex OIDC, Prometheus scraping, etc.)
+apiVersion: networking.k8s.io/v1
+kind: NetworkPolicy
+metadata:
+  name: default-deny-all
+  namespace: ustbite-frontend
+spec:
+  podSelector: {}
+  policyTypes:
+    - Ingress
+    - Egress
+---
+apiVersion: networking.k8s.io/v1
+kind: NetworkPolicy
+metadata:
+  name: default-deny-all
+  namespace: ustbite-backend
+spec:
+  podSelector: {}
+  policyTypes:
+    - Ingress
+    - Egress
+---
+apiVersion: networking.k8s.io/v1
+kind: NetworkPolicy
+metadata:
+  name: default-deny-all
+  namespace: ustbite-ops
+spec:
+  podSelector: {}
+  policyTypes:
+    - Ingress
+    - Egress

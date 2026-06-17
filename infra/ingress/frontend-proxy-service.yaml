@@ -1,0 +1,11 @@
+apiVersion: v1
+kind: Service
+metadata:
+  name: ustbite-frontend-proxy
+  namespace: ustbite-backend
+spec:
+  type: ExternalName
+  externalName: ustbite-frontend-prod.ustbite-frontend.svc.cluster.local
+  ports:
+    - port: 8080
+      targetPort: 8080

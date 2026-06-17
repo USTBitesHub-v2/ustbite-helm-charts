@@ -1,0 +1,57 @@
+---
+# ClusterRole: read-only access to pods, logs, events, deployments across all namespaces
+# The aiops-service needs cluster-wide read to inspect any failing service
+apiVersion: rbac.authorization.k8s.io/v1
+kind: ClusterRole
+metadata:
+  name: ustbite-aiops-reader
+rules:
+  - apiGroups: [""]
+    resources: ["pods", "pods/log", "events", "services", "endpoints", "namespaces"]
+    verbs: ["get", "list", "watch"]
+  - apiGroups: ["apps"]
+    resources: ["deployments", "replicasets", "statefulsets"]
+    verbs: ["get", "list", "watch"]
+  - apiGroups: [""]
+    resources: ["pods/exec"]
+    verbs: ["create"]  # required for kubectl exec (used only for allowlisted diagnostic commands)
+---
+# ClusterRole: write access for remediation actions (restart, scale, delete pod)
+apiVersion: rbac.authorization.k8s.io/v1
+kind: ClusterRole
+metadata:
+  name: ustbite-aiops-remediator
+rules:
+  - apiGroups: ["apps"]
+    resources: ["deployments"]
+    verbs: ["patch"]
+  - apiGroups: [""]
+    resources: ["pods"]
+    verbs: ["delete"]
+---
+# Bind both roles to the aiops service account in ustbite-ops namespace
+apiVersion: rbac.authorization.k8s.io/v1
+kind: ClusterRoleBinding
+metadata:
+  name: ustbite-aiops-reader-binding
+roleRef:
+  apiGroup: rbac.authorization.k8s.io
+  kind: ClusterRole
+  name: ustbite-aiops-reader
+subjects:
+  - kind: ServiceAccount
+    name: ustbite-aiops-service-prod
+    namespace: ustbite-ops
+---
+apiVersion: rbac.authorization.k8s.io/v1
+kind: ClusterRoleBinding
+metadata:
+  name: ustbite-aiops-remediator-binding
+roleRef:
+  apiGroup: rbac.authorization.k8s.io
+  kind: ClusterRole
+  name: ustbite-aiops-remediator
+subjects:
+  - kind: ServiceAccount
+    name: ustbite-aiops-service-prod
+    namespace: ustbite-ops

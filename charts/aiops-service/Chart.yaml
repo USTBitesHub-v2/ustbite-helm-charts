@@ -1,0 +1,6 @@
+apiVersion: v2
+name: aiops-service
+description: USTBites AI Ops — cluster log analysis and remediation service
+type: application
+version: 0.1.0
+appVersion: "1.0.0"

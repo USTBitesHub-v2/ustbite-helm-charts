@@ -1,0 +1,80 @@
+
+apiVersion: argoproj.io/v1alpha1
+kind: ApplicationSet
+metadata:
+  name: ustbite-prod
+  namespace: argocd
+spec:
+  generators:
+    - list:
+        elements:
+      
+          - service: frontend
+            namespace: ustbite-frontend
+            port: "80"
+
+          - service: user-service
+            namespace: ustbite-backend
+            port: "8001"
+          - service: restaurant-service
+            namespace: ustbite-backend
+            port: "8002"
+          - service: order-service
+            namespace: ustbite-backend
+            port: "8003"
+          - service: payment-service
+            namespace: ustbite-backend
+            port: "8004"
+          - service: delivery-service
+            namespace: ustbite-backend
+            port: "8005"
+          - service: notification-service
+            namespace: ustbite-backend
+            port: "8006"
+          - service: cart-service
+            namespace: ustbite-backend
+            port: "8010"
+          - service: ai-agent-service
+            namespace: ustbite-backend
+            port: "8009"
+
+          - service: aiops-service
+            namespace: ustbite-ops
+            port: "8011"
+
+  template:
+    metadata:
+      name: "ustbite-{{service}}-prod"
+      namespace: argocd
+      annotations:
+        notifications.argoproj.io/subscribe.on-sync-failed.slack: ustbite-alerts
+    spec:
+      project: default
+      sources:
+        - repoURL: https://github.com/GITHUB_ORG/ustbite-helm-charts.git
+          targetRevision: main
+          path: "charts/{{service}}"
+          helm:
+            valueFiles:
+              - values.prod.yaml
+      destination:
+        server: https://kubernetes.default.svc
+        namespace: "{{namespace}}"
+      syncPolicy:
+        automated:
+          prune: true
+          selfHeal: true
+        retry:
+          limit: 3
+          backoff:
+            duration: 10s
+            maxDuration: 3m
+        syncOptions:
+          - CreateNamespace=true
+          - ServerSideApply=true
+      revisionHistoryLimit: 3
+      ignoreDifferences:
+        - group: apps
+          kind: Deployment
+          jsonPointers:
+            - /spec/replicas   # allow HPA to manage replicas

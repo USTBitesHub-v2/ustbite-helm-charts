@@ -1,0 +1,224 @@
+apiVersion: networking.k8s.io/v1
+kind: Ingress
+metadata:
+  name: ustbite-user-auth-ingress
+  namespace: ustbite-backend
+  annotations:
+    nginx.ingress.kubernetes.io/use-regex: "true"
+    nginx.ingress.kubernetes.io/rewrite-target: /auth/$2
+spec:
+  ingressClassName: nginx
+  rules:
+    - host: ustbites.com
+      http:
+        paths:
+          - path: /api/auth(/|$)(.*)
+            pathType: ImplementationSpecific
+            backend:
+              service:
+                name: ustbite-user-service-prod
+                port:
+                  number: 8001
+---
+apiVersion: networking.k8s.io/v1
+kind: Ingress
+metadata:
+  name: ustbite-user-users-ingress
+  namespace: ustbite-backend
+  annotations:
+    nginx.ingress.kubernetes.io/use-regex: "true"
+    nginx.ingress.kubernetes.io/rewrite-target: /users/$2
+spec:
+  ingressClassName: nginx
+  rules:
+    - host: ustbites.com
+      http:
+        paths:
+          - path: /api/users(/|$)(.*)
+            pathType: ImplementationSpecific
+            backend:
+              service:
+                name: ustbite-user-service-prod
+                port:
+                  number: 8001
+---
+apiVersion: networking.k8s.io/v1
+kind: Ingress
+metadata:
+  name: ustbite-restaurant-ingress
+  namespace: ustbite-backend
+  annotations:
+    nginx.ingress.kubernetes.io/use-regex: "true"
+    nginx.ingress.kubernetes.io/rewrite-target: /restaurants/$2
+spec:
+  ingressClassName: nginx
+  rules:
+    - host: ustbites.com
+      http:
+        paths:
+          - path: /api/restaurants(/|$)(.*)
+            pathType: ImplementationSpecific
+            backend:
+              service:
+                name: ustbite-restaurant-service-prod
+                port:
+                  number: 8002
+---
+apiVersion: networking.k8s.io/v1
+kind: Ingress
+metadata:
+  name: ustbite-order-ingress
+  namespace: ustbite-backend
+  annotations:
+    nginx.ingress.kubernetes.io/use-regex: "true"
+    nginx.ingress.kubernetes.io/rewrite-target: /orders/$2
+    nginx.ingress.kubernetes.io/limit-rps: "30"
+    nginx.ingress.kubernetes.io/limit-connections: "10"
+spec:
+  ingressClassName: nginx
+  rules:
+    - host: ustbites.com
+      http:
+        paths:
+          - path: /api/orders(/|$)(.*)
+            pathType: ImplementationSpecific
+            backend:
+              service:
+                name: ustbite-order-service-prod
+                port:
+                  number: 8003
+---
+apiVersion: networking.k8s.io/v1
+kind: Ingress
+metadata:
+  name: ustbite-payment-ingress
+  namespace: ustbite-backend
+  annotations:
+    nginx.ingress.kubernetes.io/use-regex: "true"
+    nginx.ingress.kubernetes.io/rewrite-target: /payments/$2
+    nginx.ingress.kubernetes.io/limit-rps: "10"
+    nginx.ingress.kubernetes.io/limit-connections: "5"
+spec:
+  ingressClassName: nginx
+  rules:
+    - host: ustbites.com
+      http:
+        paths:
+          - path: /api/payments(/|$)(.*)
+            pathType: ImplementationSpecific
+            backend:
+              service:
+                name: ustbite-payment-service-prod
+                port:
+                  number: 8004
+---
+apiVersion: networking.k8s.io/v1
+kind: Ingress
+metadata:
+  name: ustbite-delivery-ingress
+  namespace: ustbite-backend
+  annotations:
+    nginx.ingress.kubernetes.io/use-regex: "true"
+    nginx.ingress.kubernetes.io/rewrite-target: /delivery/$2
+spec:
+  ingressClassName: nginx
+  rules:
+    - host: ustbites.com
+      http:
+        paths:
+          - path: /api/delivery(/|$)(.*)
+            pathType: ImplementationSpecific
+            backend:
+              service:
+                name: ustbite-delivery-service-prod
+                port:
+                  number: 8005
+---
+apiVersion: networking.k8s.io/v1
+kind: Ingress
+metadata:
+  name: ustbite-cart-ingress
+  namespace: ustbite-backend
+  annotations:
+    nginx.ingress.kubernetes.io/use-regex: "true"
+    nginx.ingress.kubernetes.io/rewrite-target: /cart/$2
+spec:
+  ingressClassName: nginx
+  rules:
+    - host: ustbites.com
+      http:
+        paths:
+          - path: /api/cart(/|$)(.*)
+            pathType: ImplementationSpecific
+            backend:
+              service:
+                name: ustbite-cart-service-prod
+                port:
+                  number: 8010
+---
+apiVersion: networking.k8s.io/v1
+kind: Ingress
+metadata:
+  name: ustbite-ai-agent-ingress
+  namespace: ustbite-backend
+  annotations:
+    nginx.ingress.kubernetes.io/use-regex: "true"
+    nginx.ingress.kubernetes.io/rewrite-target: /$2
+    nginx.ingress.kubernetes.io/proxy-read-timeout: "3600"
+    nginx.ingress.kubernetes.io/proxy-send-timeout: "3600"
+spec:
+  ingressClassName: nginx
+  rules:
+    - host: ustbites.com
+      http:
+        paths:
+          - path: /api/agent(/|$)(.*)
+            pathType: ImplementationSpecific
+            backend:
+              service:
+                name: ustbite-ai-agent-service-prod
+                port:
+                  number: 8009
+---
+apiVersion: networking.k8s.io/v1
+kind: Ingress
+metadata:
+  name: ustbite-aiops-ingress
+  namespace: ustbite-backend
+  annotations:
+    nginx.ingress.kubernetes.io/use-regex: "true"
+    nginx.ingress.kubernetes.io/rewrite-target: /$2
+    nginx.ingress.kubernetes.io/proxy-read-timeout: "120"
+    nginx.ingress.kubernetes.io/proxy-send-timeout: "120"
+spec:
+  ingressClassName: nginx
+  rules:
+    - host: ustbites.com
+      http:
+        paths:
+          - path: /api/ops(/|$)(.*)
+            pathType: ImplementationSpecific
+            backend:
+              service:
+                name: ustbite-ops-proxy
+                port:
+                  number: 8011
+---
+apiVersion: networking.k8s.io/v1
+kind: Ingress
+metadata:
+  name: ustbite-frontend-ingress
+  namespace: ustbite-backend
+spec:
+  ingressClassName: nginx
+  rules:
+    - host: ustbites.com
+      http:
+        paths:
+          - path: /
+            pathType: Prefix
+            backend:
+              service:
+                name: ustbite-frontend-proxy
+                port:
+                  number: 8080
