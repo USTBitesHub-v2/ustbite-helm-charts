@@ -1,6 +1,6 @@
 replicaCount: 2
 image:
-  repository: ACCOUNT_ID.dkr.ecr.REGION.amazonaws.com/ustbite/ai-agent-service
+  repository: 591316257673.dkr.ecr.us-east-1.amazonaws.com/ustbite/ai-agent-service
   pullPolicy: IfNotPresent
   tag: ai-agent-service-v0.0.1
 service:
@@ -34,7 +34,7 @@ podDisruptionBudget:
 serviceAccount:
   create: true
   name: ""
-  irsaRoleArn: "arn:aws:iam::ACCOUNT_ID:role/ustbite-prod-ai-agent-bedrock"
+  irsaRoleArn: "arn:aws:iam::591316257673:role/ustbite-prod-ai-agent-bedrock"
 livenessProbe:
   httpGet:
     path: /health

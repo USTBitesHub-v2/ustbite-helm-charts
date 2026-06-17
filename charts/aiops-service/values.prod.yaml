@@ -1,7 +1,7 @@
 replicaCount: 1
 
 image:
-  repository: ACCOUNT_ID.dkr.ecr.REGION.amazonaws.com/ustbite/aiops-service
+  repository: 591316257673.dkr.ecr.us-east-1.amazonaws.com/ustbite/aiops-service
   pullPolicy: IfNotPresent
   tag: aiops-service-v0.0.1
 
@@ -17,7 +17,7 @@ env:
   AWS_REGION: "us-east-1"
   BEDROCK_MODEL_ID: "amazon.nova-lite-v1:0"
   CLUSTER_NAME: "ustbite-prod"
-  GITHUB_OWNER: "GITHUB_OWNER"
+  GITHUB_OWNER: "USTBitesHub-v2"
   GITHUB_REPO: "ustbite-helm-charts"
 
 secrets: true
@@ -33,7 +33,7 @@ resources:
 serviceAccount:
   create: true
   name: ""
-  irsaRoleArn: "arn:aws:iam::ACCOUNT_ID:role/ustbite-prod-aiops-bedrock"
+  irsaRoleArn: "arn:aws:iam::591316257673:role/ustbite-prod-aiops-bedrock"
 
 livenessProbe:
   httpGet:

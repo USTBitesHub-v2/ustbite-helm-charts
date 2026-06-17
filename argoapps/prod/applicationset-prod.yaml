@@ -51,7 +51,7 @@ spec:
     spec:
       project: default
       sources:
-        - repoURL: https://github.com/GITHUB_ORG/ustbite-helm-charts.git
+        - repoURL: https://github.com/USTBitesHub-v2/ustbite-helm-charts.git
           targetRevision: main
           path: "charts/{{service}}"
           helm:

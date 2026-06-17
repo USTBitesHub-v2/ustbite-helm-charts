@@ -1,6 +1,6 @@
 replicaCount: 2
 image:
-  repository: ACCOUNT_ID.dkr.ecr.REGION.amazonaws.com/ustbite/user-service
+  repository: 591316257673.dkr.ecr.us-east-1.amazonaws.com/ustbite/user-service
   pullPolicy: IfNotPresent
   tag: user-service-v0.0.1
 service:
@@ -11,7 +11,7 @@ env:
   SERVICE_NAME: ustbite-user-service
   SERVICE_PORT: "8001"
   LOG_LEVEL: "INFO"
-  DATABASE_HOST: ustbite-user-prod.XXXXXXXXXXXX.REGION.rds.amazonaws.com
+  DATABASE_HOST: ustbite-user-prod.cuzmg40iayni.us-east-1.rds.amazonaws.com
   DATABASE_PORT: "5432"
   DATABASE_NAME: ustbite_users_db
 resources:

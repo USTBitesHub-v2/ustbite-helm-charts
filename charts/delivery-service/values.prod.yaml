@@ -1,6 +1,6 @@
 replicaCount: 2
 image:
-  repository: ACCOUNT_ID.dkr.ecr.REGION.amazonaws.com/ustbite/delivery-service
+  repository: 591316257673.dkr.ecr.us-east-1.amazonaws.com/ustbite/delivery-service
   pullPolicy: IfNotPresent
   tag: delivery-service-v0.0.1
 service:
@@ -11,7 +11,7 @@ env:
   SERVICE_NAME: ustbite-delivery-service
   SERVICE_PORT: "8005"
   LOG_LEVEL: "INFO"
-  DATABASE_HOST: ustbite-delivery-prod.XXXXXXXXXXXX.REGION.rds.amazonaws.com
+  DATABASE_HOST: ustbite-delivery-prod.cuzmg40iayni.us-east-1.rds.amazonaws.com
   DATABASE_PORT: "5432"
   DATABASE_NAME: ustbite_delivery_db
 resources:

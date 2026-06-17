@@ -1,6 +1,6 @@
 replicaCount: 2
 image:
-  repository: ACCOUNT_ID.dkr.ecr.REGION.amazonaws.com/ustbite/notification-service
+  repository: 591316257673.dkr.ecr.us-east-1.amazonaws.com/ustbite/notification-service
   pullPolicy: IfNotPresent
   tag: notification-service-v0.0.1
 service:

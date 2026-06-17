@@ -1,6 +1,6 @@
 replicaCount: 1
 image:
-  repository: ACCOUNT_ID.dkr.ecr.REGION.amazonaws.com/ustbite/frontend
+  repository: 591316257673.dkr.ecr.us-east-1.amazonaws.com/ustbite/frontend
   pullPolicy: IfNotPresent
   tag: frontend-v0.0.1
 service:
