@@ -2,7 +2,7 @@ replicaCount: 2
 image:
   repository: ACCOUNT_ID.dkr.ecr.REGION.amazonaws.com/ustbite/payment-service
   pullPolicy: IfNotPresent
-  tag: payment-service-v0.2.2
+  tag: payment-service-v0.0.1
 service:
   type: ClusterIP
   port: 8004
