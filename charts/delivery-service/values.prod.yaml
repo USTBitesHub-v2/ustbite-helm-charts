@@ -2,7 +2,7 @@ replicaCount: 2
 image:
   repository: ACCOUNT_ID.dkr.ecr.REGION.amazonaws.com/ustbite/delivery-service
   pullPolicy: IfNotPresent
-  tag: delivery-service-v0.0.16
+  tag: delivery-service-v0.0.1
 service:
   type: ClusterIP
   port: 8005
