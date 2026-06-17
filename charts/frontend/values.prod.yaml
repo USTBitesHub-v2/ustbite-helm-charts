@@ -2,7 +2,7 @@ replicaCount: 1
 image:
   repository: ACCOUNT_ID.dkr.ecr.REGION.amazonaws.com/ustbite/frontend
   pullPolicy: IfNotPresent
-  tag: frontend-v0.10.0
+  tag: frontend-v0.0.1
 service:
   type: ClusterIP
   port: 8080
