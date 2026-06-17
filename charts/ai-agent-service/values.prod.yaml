@@ -2,7 +2,7 @@ replicaCount: 2
 image:
   repository: ACCOUNT_ID.dkr.ecr.REGION.amazonaws.com/ustbite/ai-agent-service
   pullPolicy: IfNotPresent
-  tag: ai-agent-service-v0.4.0
+  tag: ai-agent-service-v0.0.1
 service:
   type: ClusterIP
   port: 8009
