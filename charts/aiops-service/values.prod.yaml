@@ -3,7 +3,7 @@ replicaCount: 1
 image:
   repository: ACCOUNT_ID.dkr.ecr.REGION.amazonaws.com/ustbite/aiops-service
   pullPolicy: IfNotPresent
-  tag: aiops-service-v0.1.0
+  tag: aiops-service-v0.0.1
 
 service:
   type: ClusterIP
